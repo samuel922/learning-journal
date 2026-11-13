@@ -1,127 +1,207 @@
-* {
-    padding: 0;
-    margin: 0;
+/* ==========================================================================
+   Contents
+   1. Design tokens
+   2. Reset
+   3. Base elements
+   4. Page layout
+   5. Site header & nav
+   6. Cover (home page hero)
+   7. Blog cards
+   8. Blog post & About pages
+   9. Recent posts
+   10. Footer
+   ========================================================================== */
+
+
+/* 1. Design tokens
+   ========================================================================== */
+:root {
+    /* Colours */
+    --color-text: #090909;
+    --color-text-muted: #505050;
+    --color-bg: #ffffff;
+    --color-border: #ececec;
+    --color-footer-bg: #202020;
+    --color-footer-text: #ececec;
+    --color-footer-text-muted: #d7d7d7;
+    --color-overlay: rgb(0 0 0 / 0.45);
+
+    /* Typography */
+    --font-body: "Source Sans 3", system-ui, sans-serif;
+    --fs-small: 0.75rem;
+    --fs-base: 1rem;
+    --fs-h2: 1.5rem;
+    --fs-h1: 2rem;
+
+    /* Layout */
+    --content-width: 1100px;
+    --gutter: 1rem;
+    --header-height: 60px;
+    --radius: 4px;
+}
+
+
+/* 2. Reset
+   ========================================================================== */
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
-:root {
-    --content-width: 1100px;
+* {
+    margin: 0;
+    padding: 0;
 }
 
-/* Typography */
-body {
-    font-family: "Source Sans 3", sans-serif;
-}
-
-h1, h2 {
-    font-weight: 700;
-}
-
-h1 {
-    font-size: 2rem;
-}
-
-h2 {
-    font-size: 1.5rem;
-}
-
-p {
-    line-height: 1.5;
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    /* Stop the sticky header covering anything you jump to with a #link */
+    scroll-padding-top: var(--header-height);
 }
 
 img {
-    width: 100%;
+    display: block;
+    max-width: 100%;
+    height: auto;
 }
 
-ul {
-    list-style: none;
+
+/* 3. Base elements
+   ========================================================================== */
+body {
+    font-family: var(--font-body);
+    font-size: var(--fs-base);
+    line-height: 1.5;
+    color: var(--color-text);
+    background-color: var(--color-bg);
 }
 
-a {
-    text-decoration: none;
+h1,
+h2 {
+    line-height: 1.2;
+    text-wrap: balance;
+}
+
+h1 {
+    font-size: var(--fs-h1);
+}
+
+h2 {
+    font-size: var(--fs-h2);
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-text);
+    outline-offset: 4px;
 }
 
 .date-span {
-    font-size: 0.75rem;
+    font-size: var(--fs-small);
 }
 
-/* Layout */
+
+/* 4. Page layout
+   ========================================================================== */
 .site-grid-container {
+    min-height: 100vh;
+    min-height: 100dvh;
+
     display: grid;
     grid-template-columns:
-        minmax(1em, 1fr)
+        minmax(var(--gutter), 1fr)
         minmax(0, var(--content-width))
-        minmax(1em, 1fr);
+        minmax(var(--gutter), 1fr);
+    grid-template-rows: auto auto 1fr auto;
     grid-template-areas:
-        ".... .... ...." 
-        "head head head"
+        "head  head  head"
         "cover cover cover"
-        ".... main ...."
-        "foot foot foot"
-        ".... .... ...."
-    ;
+        ".     main  .    "
+        "foot  foot  foot";
 }
 
+main {
+    grid-area: main;
+}
+
+/* Full-width background, but content lines up with the main column */
+.main-header nav,
+.header-cover {
+    padding-block: 1rem;
+    padding-inline: max(var(--gutter), (100% - var(--content-width)) / 2);
+}
+
+
+/* 5. Site header & nav
+   ========================================================================== */
 .main-header {
     grid-area: head;
-
     position: sticky;
     top: 0;
     z-index: 10;
-    background-color: #FFFFFF;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    background-color: var(--color-bg);
+    box-shadow: 0 1px 4px rgb(0 0 0 / 0.08);
 }
-
-.main-header nav,
-.header-cover {
-    padding: 1em;
-    /* Full-width background, but content lines up with the main column */
-    padding-inline: max(1em, (100% - var(--content-width)) / 2);
-}
-
 
 .main-header nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 60px;
+    gap: 1rem;
+    min-height: var(--header-height);
 }
 
-.main-header nav .logo {
+.logo {
     display: flex;
+    align-items: center;
     gap: 0.5em;
 }
 
-.main-header nav ul {
+.logo img {
+    width: 24px;
+}
+
+.main-header ul {
     display: flex;
     gap: 1em;
+    list-style: none;
 }
 
-.main-header nav ul a {
-    text-transform: uppercase;
-    font-size: 0.75rem;
+.main-header ul a {
+    font-size: var(--fs-small);
     font-weight: 600;
-    color: #090909;
+    text-transform: uppercase;
+    color: var(--color-text);
+    text-decoration: none;
+    text-underline-offset: 4px;
+}
+
+.main-header ul a:hover,
+.main-header ul a[aria-current="page"] {
+    text-decoration: underline;
 }
 
 
+/* 6. Cover (home page hero)
+   ========================================================================== */
 .header-cover {
     grid-area: cover;
-    background-image:
-        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
-        url('../images/cover.png');
-    background-size: cover;
-    background-position: center 80%;
-    background-repeat: no-repeat;
-    color: #FFFFFF;
-
     min-height: 420px;
+    margin-bottom: 1em;
+
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     gap: 0.5em;
 
-    margin-bottom: 1em;
+    color: #ffffff;
+    background-image:
+        linear-gradient(var(--color-overlay), var(--color-overlay)),
+        url("../images/cover.png");
+    background-size: cover;
+    background-position: center 80%;
+    background-repeat: no-repeat;
 }
 
 .header-cover h1 {
@@ -129,41 +209,12 @@ a {
 }
 
 .header-cover p {
-    font-size: 1rem;
     max-width: 60ch;
 }
 
-.main-header img {
-    width: 24px;
-}
 
-main {
-    grid-area: main;
-}
-
-footer {
-    grid-area: foot;
-    background-color: #202020;
-    padding: 1em;
-    font-size: 0.75rem;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-footer p { 
-    color: #ECECEC;
-}
-footer span {
-    color: #D7D7D7;
-}
-
-/* Header */
-
-
-/* Blogs */
+/* 7. Blog cards
+   ========================================================================== */
 .blogs-section {
     padding-block: 1.5em 3em;
 }
@@ -172,25 +223,32 @@ footer span {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
     gap: 2.5em 1.5em;
+    list-style: none;
 }
 
 .blog a {
     display: flex;
     flex-direction: column;
     gap: 0.5em;
-    color: #505050;
+    color: var(--color-text-muted);
+    text-decoration: none;
 }
 
 .blog img {
+    width: 100%;
     aspect-ratio: 16 / 10;
     object-fit: cover;
-    border-radius: 4px;
+    border-radius: var(--radius);
     margin-bottom: 0.25em;
 }
 
 .blog h2 {
-    color: #090909;
-    line-height: 1.2;
+    color: var(--color-text);
+    text-underline-offset: 4px;
+}
+
+.blog a:hover h2 {
+    text-decoration: underline;
 }
 
 .view-more {
@@ -198,12 +256,13 @@ footer span {
     width: fit-content;
     margin: 2.5em auto 0;
     font-weight: 700;
-    color: #090909;
-    text-decoration: underline;
+    color: var(--color-text);
     text-underline-offset: 4px;
 }
 
-/* Blog post & About pages */
+
+/* 8. Blog post & About pages
+   ========================================================================== */
 .post {
     max-width: 75ch;
     margin-inline: auto;
@@ -211,38 +270,37 @@ footer span {
 }
 
 .post-header,
-.about-intro {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75em;
-    margin-bottom: 1.5em;
-}
-
+.about-intro,
 .about-intro > div {
     display: flex;
     flex-direction: column;
     gap: 0.75em;
 }
 
+.post-header,
+.about-intro {
+    margin-bottom: 1.5em;
+}
+
 .post-header p,
 .about-intro p {
-    color: #505050;
+    color: var(--color-text-muted);
 }
 
 .post-hero {
+    width: 100%;
     aspect-ratio: 16 / 9;
     object-fit: cover;
-    border-radius: 4px;
+    border-radius: var(--radius);
     margin-bottom: 1.5em;
 }
 
 .post-content h2 {
     margin-block: 1.25em 0.5em;
-    line-height: 1.2;
 }
 
 .post-content p {
-    color: #505050;
+    color: var(--color-text-muted);
     margin-bottom: 1em;
 }
 
@@ -262,18 +320,38 @@ footer span {
     }
 }
 
-.main-header nav ul a[aria-current="page"] {
-    text-decoration: underline;
-    text-underline-offset: 4px;
-}
 
-/* Recent posts */
+/* 9. Recent posts
+   ========================================================================== */
 .recent-posts {
     padding-block: 2em 3em;
-    border-top: 1px solid #ECECEC;
+    border-top: 1px solid var(--color-border);
 }
 
 .recent-posts > h2 {
     text-align: center;
     margin-bottom: 1.5em;
+}
+
+
+/* 10. Footer
+   ========================================================================== */
+footer {
+    grid-area: foot;
+    padding: 1em;
+    font-size: var(--fs-small);
+    background-color: var(--color-footer-bg);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+footer p {
+    color: var(--color-footer-text);
+}
+
+footer span {
+    color: var(--color-footer-text-muted);
 }
