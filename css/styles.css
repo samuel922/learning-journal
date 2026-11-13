@@ -1,0 +1,205 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --content-width: 1100px;
+}
+
+/* Typography */
+body {
+    font-family: "Source Sans 3", sans-serif;
+}
+
+h1, h2 {
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+p {
+    line-height: 1.5;
+}
+
+img {
+    width: 100%;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.date-span {
+    font-size: 0.75rem;
+}
+
+/* Layout */
+.site-grid-container {
+    display: grid;
+    grid-template-columns:
+        minmax(1em, 1fr)
+        minmax(0, var(--content-width))
+        minmax(1em, 1fr);
+    grid-template-areas:
+        ".... .... ...." 
+        "head head head"
+        "cover cover cover"
+        ".... main ...."
+        "foot foot foot"
+        ".... .... ...."
+    ;
+}
+
+.main-header {
+    grid-area: head;
+
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: #FFFFFF;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.main-header nav,
+.header-cover {
+    padding: 1em;
+    /* Full-width background, but content lines up with the main column */
+    padding-inline: max(1em, (100% - var(--content-width)) / 2);
+}
+
+
+.main-header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+}
+
+.main-header nav .logo {
+    display: flex;
+    gap: 0.5em;
+}
+
+.main-header nav ul {
+    display: flex;
+    gap: 1em;
+}
+
+.main-header nav ul a {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #090909;
+}
+
+
+.header-cover {
+    grid-area: cover;
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+        url('../images/cover.png');
+    background-size: cover;
+    background-position: center 80%;
+    background-repeat: no-repeat;
+    color: #FFFFFF;
+
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.5em;
+
+    margin-bottom: 1em;
+}
+
+.header-cover h1 {
+    max-width: 25ch;
+}
+
+.header-cover p {
+    font-size: 1rem;
+    max-width: 60ch;
+}
+
+.main-header img {
+    width: 24px;
+}
+
+main {
+    grid-area: main;
+}
+
+footer {
+    grid-area: foot;
+    background-color: #202020;
+    padding: 1em;
+    font-size: 0.75rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+footer p { 
+    color: #ECECEC;
+}
+footer span {
+    color: #D7D7D7;
+}
+
+/* Header */
+
+
+/* Blogs */
+.blogs-section {
+    padding-block: 1.5em 3em;
+}
+
+.blogs-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 2.5em 1.5em;
+}
+
+.blog a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    color: #505050;
+}
+
+.blog img {
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 0.25em;
+}
+
+.blog h2 {
+    color: #090909;
+    line-height: 1.2;
+}
+
+.view-more {
+    display: block;
+    width: fit-content;
+    margin: 2.5em auto 0;
+    font-weight: 700;
+    color: #090909;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
