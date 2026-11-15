@@ -312,7 +312,7 @@ main {
     flex-shrink: 0;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 678px) {
     .about-intro {
         flex-direction: row;
         align-items: center;
